@@ -1,0 +1,29 @@
+.song-wrapper {
+    display: grid;
+    grid-template-rows: 20px 200px 50px;
+    grid-template-columns: repeat(1fr, 5);
+}
+
+.song-table-header {
+    grid-row: 0 / 1;
+}
+
+.song-rank-2004 {
+    grid-column: 0 / 1;
+}
+
+.song-rank-2021 {
+    grid-column: 1 / 2;
+}
+
+.song-title {
+    grid-column: 2 / 3;
+}
+
+.song-artist {
+    grid-column: 3 / 4;
+}
+
+.song-year {
+    grid-column: 4 / 5;
+}

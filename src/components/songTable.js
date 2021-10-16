@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import ReactPaginate from 'react-paginate';
 
+import sortArray from 'sort-array';
+
+import './songTable.scss';
+
 let songs = require('../topSongs.json');
+console.log(sortArray);
 
 class SongTable extends Component {
     constructor(props) {
@@ -19,42 +24,30 @@ class SongTable extends Component {
 
     sortTable = (column, reverse=false) => {
 
-        const order = (bool) => {
-            return reverse ? !bool : bool;
-        }
-
-        songs.sort( (a, b) => {
-            let compare;
-
-            switch (column) {
-                case '2004':
-                    compare = a.ranking[2004] < b.ranking[2004];
-                    break;
-                case '2021':
-                    compare = a.ranking[2021] < b.ranking[2021];
-                    break;
-                case 'title':
-                    compare = a.title > b.title;
-                    break;
-                case 'artist':
-                    compare = a.artist > b.artist;
-                    break;
-                default:
-                    compare = 0;
-            }
-
-            return order(compare);
-        });
+        sortArray( songs, { by: column, order: reverse ? 'desc' : 'asc' });
     }
 
     render() {
         return (
-            <div>
-                <ul>
+            <div className='song-wrapper'>
+                <div className='song-table-header'>
+                    <span className='song-rank-2004'>2004</span>
+                    <span className='song-rank-2021'>2021</span>
+                    <span className='song-title'>Title</span>
+                    <span className='song-artist'>Artist</span>
+                    <span className='song-year'>Year</span>
+                </div>
+                <ol className='song-table'>
                     {this.state.display.map((song, index) => {
-                        return <li key={index}>{song.ranking[2004]} / {song.ranking[2021]} {song.title}, {song.artist}. {song.year}</li>
+                        return <li key={index}>
+                                <span className='song-rank-2004'>{song.ranking[2004]}</span>
+                                <span className='song-rank-2021'>{song.ranking[2021]}</span>
+                                <span className='song-title'>{song.title}</span>
+                                <span className='song-artist'>{song.artist}</span>
+                                <span className='song-year'>{song.year}</span>
+                            </li>
                     })}
-                </ul>
+                </ol>
                 <ReactPaginate
                     pageCount={this.state.pageCount}
                     marginPagesDisplayed={2}
